@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>List</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								ID
+							</th>
+							<th>
+								Drive Type
+							</th>
+							<th>
+								URL
+							</th>
+							<th>
+								File Size
+							</th>
+							<th>
+								IP
+							</th>
+							<th>
+								Time
+							</th>
+							<th>
+								Confirm
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for task in tasks %}
+						<tr>
+							<td>
+								{{ task.id }}
+							</td>
+							<td>
+								{{ task.drivetype }}
+							</td>
+							<td>
+								<a target="_blank" href="{{ task.url }}">URL</a>
+							</td>
+							<td>
+								{% if task.size %}
+								{{ task.size | filesizeformat }}
+								{% else %}
+								Unknown
+								{% endif %}
+							</td>
+							<td>
+								{{ task.ip }}
+							</td>
+							<td>
+								{{ task.time | date:"Y-m-d H:i:s" }}
+							</td>
+							<td>
+								{% if not task.confirmed %}
+								<a href="/confirm/{{ task.id }}" class="btn btn-primary" type="button">Confirm</a>
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				<ul class="pagination justify-content-center">
+					{% if tasks.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ tasks.previous_page_number }}"><<</a>
+					</li>
+					{% endif %}
+					{% for i in range %}
+					<li class="page-item {% if i == tasks.number %}active{% endif %}">
+						<a class="page-link" href="?page={{ i }}">{{ i }}</a>
+					</li>
+					{% endfor %}
+					{% if tasks.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ tasks.next_page_number }}">>></a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
