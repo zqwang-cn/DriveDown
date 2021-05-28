@@ -23,3 +23,9 @@ and visit [localhost:8000](http://localhost:8000)
 ## Deployment
 
 Use [uwsgi](https://uwsgi-docs.readthedocs.io/en/latest/) or other tools to deploy.
+
+## Snapshots
+
+![submit](snapshots/1.png)
+
+![download](snapshots/2.png)
